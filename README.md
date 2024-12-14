@@ -56,7 +56,7 @@ This will read the file `example.py`, obfuscate it with randomized names of leng
 ### Input (`example.py`):
 ```python
 def greet(name):
-    print(f"Helo, {name}")
+    print(f"Name: , {name}")
 
 greet("Alice")
 ```
@@ -69,7 +69,7 @@ python obfuscator.py -i example.py -l 16 -o obfuscated_example.py
 ### Output (`obfuscated_example.py`):
 ```python
 def xzhlrvioukiqjkyo(ahtjqcvqjdakllay):
-    print(f"Helo, {ahtjqcvqjdakllay}")
+    print(f"Name: , {ahtjqcvqjdakllay}")
 
 xzhlrvioukiqjkyo("Alice")
 ```
