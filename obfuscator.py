@@ -1,8 +1,9 @@
 import random
 import string
 import ast
-import re
 import argparse
+import tokenize
+from io import StringIO
 
 NO_OBFUSCATE = set([            #this is here because I couldn't fix these
     'os', 'sys', 'random', 'string', 'ast', 're', 'open', 'print', 'exit',      #you could probably get rid of some of them
@@ -73,16 +74,21 @@ def obfuscate_and_replace(file_path, length, output_file):
 
     collect_names(tree, name_map, imported_modules, imported_functions_classes, NO_OBFUSCATE, length)
 
-    def replace_match(match):
-        name = match.group(0)
-        return name_map.get(name, name)
+    result = []
 
-    pattern = r'\b(?:' + '|'.join(re.escape(k) for k in name_map.keys()) + r')\b'
-    updated_code = re.sub(pattern, replace_match, source_code)
+    tokens = list(tokenize.generate_tokens(StringIO(source_code).readline))
+    for tok in tokens:
+        toknum, tokval, start, end, line = tok
+        if toknum == tokenize.NAME and tokval in name_map:
+            result.append((toknum, name_map[tokval], start, end, line))
+        else:
+            result.append(tok)
+
+    updated_code = tokenize.untokenize(result)
 
     with open(output_file, 'w') as file:
         file.write(updated_code)
-    print(f"File has been obfuscated successfully")
+    print("File has been obfuscated successfully")
 
 def main():
     parser = argparse.ArgumentParser(description="Python Code Obfuscator", epilog="by stigsec")
