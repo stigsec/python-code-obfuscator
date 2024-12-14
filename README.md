@@ -7,6 +7,7 @@ This is a Python script that obfuscates Python code by renaming variables and fu
 
 - **Customizable obfuscation**: Specify the length of obfuscated names.
 - **Automatic detection**: Detects and skips obfuscation for built-in names, imported modules, and essential functions. (almost always)
+- **String safety**: Leaves string literals and comments untouched to avoid breaking code functionality.
 - **Output to a new file**: Saves the obfuscated code in a separate file, leaving the original file untouched.
 
 ## Requirements
@@ -42,7 +43,8 @@ This will read the file `example.py`, obfuscate it with randomized names of leng
    - Names listed in the `NO_OBFUSCATE` set.
 3. **Generate random names**: Uses the `random` module to generate randomized names of the specified length.
 4. **Replace names**: Substitutes the original names with the randomized names while ensuring the code remains functional.
-5. **Save the output**: Writes the obfuscated code to the specified output file.
+5. **Token safety**: Leaves string literals, comments, and other tokens untouched to preserve readability in necessary areas.
+6. **Save the output**: Writes the obfuscated code to the specified output file.
 
 ## Limitations
 
